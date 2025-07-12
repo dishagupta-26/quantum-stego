@@ -48,6 +48,44 @@
     <p id="statusText" class="mt-4 text-gray-400 italic text-sm"></p>
 
   </main>
+      <script>
+    document.getElementById('receiveForm').addEventListener('submit', async e => {
+      e.preventDefault();
 
+      const statusText = document.getElementById('statusText');
+      const output     = document.getElementById('outputMessage');
+      const fileInput  = document.getElementById('stegoImageInput');
+
+      output.value = "";
+      statusText.textContent = "Extracting message… please wait.";
+
+      if (!fileInput.files.length) {
+        statusText.textContent = "Please upload a stego image.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', fileInput.files[0]);
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/decode', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.message) {
+          output.value = result.message;
+          statusText.textContent = "Message extracted successfully!";
+        } else {
+          throw new Error(result.error || 'Unknown error');
+        }
+      } catch (err) {
+        console.error(err);
+        statusText.textContent = "Failed to extract message.";
+      }
+    });
+  </script>
 </body>
 </html>
