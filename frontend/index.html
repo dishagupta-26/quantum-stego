@@ -6,17 +6,37 @@
   <title>Quantum Stego</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-6">
+<body class="bg-gray-950 text-white min-h-screen">
 
-  <div class="max-w-2xl text-center">
-    <h1 class="text-4xl font-bold mb-4 text-teal-400">Quantum Secure Communication via Steganography</h1>
-    <p class="text-lg text-gray-300 mb-6">
-      This project combines quantum key distribution and image-based steganography to provide an ultra-secure way to send hidden messages. Using principles from quantum computing and cryptography, the communication ensures both confidentiality and covertness.
+  <!-- Header -->
+  <header class="bg-gray-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
+      <nav class="space-x-4">
+        <a href="#" class="text-gray-300 hover:text-white">Home</a>
+        <a href="#" class="text-gray-300 hover:text-white">Send</a>
+        <a href="#" class="text-gray-300 hover:text-white">Receive</a>
+        <a href="#" class="text-gray-300 hover:text-white">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="p-6 flex flex-col items-center justify-center text-center">
+    <h2 class="text-3xl font-semibold mb-4 text-teal-300">Quantum Secure Communication via Steganography</h2>
+    <p class="text-gray-300 max-w-xl">
+      This project combines quantum key distribution (QKD) with steganography to enable a new kind of secure messaging.
+      Using quantum randomness to generate encryption keys and embedding messages within images, this system ensures
+      that both message content and its very presence remain hidden.
     </p>
-    <p class="text-sm text-gray-400 italic">
-      Built with Python, Qiskit, OpenCV, and Tailwind CSS.
-    </p>
-  </div>
+
+    <!-- Placeholder Buttons for Future Steps -->
+    <div class="mt-8 flex gap-4 flex-wrap justify-center">
+      <button class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded">Send Message</button>
+      <button class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">Receive Message</button>
+      <button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Quantum Key Info</button>
+    </div>
+  </main>
 
 </body>
 </html>
