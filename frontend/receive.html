@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Receive Message - Quantum Stego</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="send.html" class="text-gray-300 hover:text-white">Send</a>
+        <a href="receive.html" class="text-teal-400 font-semibold">Receive</a>
+        <a href="#" class="text-gray-300 hover:text-white">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="p-6 flex flex-col items-center justify-center text-center mt-10">
+
+    <h2 class="text-3xl font-semibold text-teal-300 mb-6">Extract Hidden Message</h2>
+
+    <form id="receiveForm" class="w-full max-w-lg space-y-6">
+      <!-- Image Upload -->
+      <div class="text-left">
+        <label class="block text-sm font-medium mb-2 text-gray-300">Upload Stego Image</label>
+        <input type="file" accept="image/*" id="stegoImageInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
+      </div>
+
+      <!-- Extract Button -->
+      <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded">
+        Extract Message
+      </button>
+
+      <!-- Output -->
+      <div class="text-left">
+        <label class="block text-sm font-medium mb-2 mt-6 text-gray-300">Extracted Message</label>
+        <textarea id="outputMessage" rows="4" readonly class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-gray-200"></textarea>
+      </div>
+    </form>
+
+    <p id="statusText" class="mt-4 text-gray-400 italic text-sm"></p>
+
+  </main>
+
+</body>
+</html>
