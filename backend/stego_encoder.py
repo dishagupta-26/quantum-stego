@@ -1,19 +1,41 @@
 import cv2
 import numpy as np
+import os
 
 def encode_message(image_path, message, output_path='encoded.png'):
     image = cv2.imread(image_path)
-    binary_msg = ''.join([format(ord(char), '08b') for char in message]) + '1111111111111110'  # EOF marker
+
+    if image is None:
+        raise ValueError("Image not found or invalid format.")
+
+    # Append an end marker
+    message += "~END~"
+    binary_msg = ''.join(format(ord(char), '08b') for char in message)
 
     index = 0
+    total_bits = len(binary_msg)
+
+    # Go through every pixel and every channel (BGR)
     for row in image:
         for pixel in row:
-            if index < len(binary_msg):
-                pixel[0] = (pixel[0] & 0b11111110) | int(binary_msg[index])
-                index += 1
-            else:
-                break
+            for channel in range(3):  # B, G, R channels
+                if index < total_bits:
+                    pixel[channel] = (int(pixel[channel]) & 0xFE) | int(binary_msg[index])
+                    index += 1
+                else:
+                    break
+                
+    print("[ENCODE] Writing encoded image to:", output_path)
+    success = cv2.imwrite(output_path, image)
+    print("[ENCODE] Write success:", success)
 
+    if index < total_bits:
+        raise ValueError("Message too long for image capacity!")
 
     cv2.imwrite(output_path, image)
-    return output_path
+    print("[ENCODER] Encoded image saved to", output_path)
+
+    if not os.path.exists(output_path):
+        raise FileNotFoundError(f"Failed to save encoded image at {output_path}")
+
+

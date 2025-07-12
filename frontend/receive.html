@@ -48,44 +48,52 @@
     <p id="statusText" class="mt-4 text-gray-400 italic text-sm"></p>
 
   </main>
-      <script>
-    document.getElementById('receiveForm').addEventListener('submit', async e => {
-      e.preventDefault();
-
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('receiveForm');
+      const fileInput = document.getElementById('stegoImageInput');
+      const outputBox = document.getElementById('outputMessage');
       const statusText = document.getElementById('statusText');
-      const output     = document.getElementById('outputMessage');
-      const fileInput  = document.getElementById('stegoImageInput');
 
-      output.value = "";
-      statusText.textContent = "Extracting message… please wait.";
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // prevent page from refreshing
 
-      if (!fileInput.files.length) {
-        statusText.textContent = "Please upload a stego image.";
-        return;
-      }
+        statusText.textContent = 'Decoding... please wait';
 
-      const formData = new FormData();
-      formData.append('image', fileInput.files[0]);
-
-      try {
-        const response = await fetch('http://127.0.0.1:5000/decode', {
-          method: 'POST',
-          body: formData
-        });
-
-        const result = await response.json();
-
-        if (result.message) {
-          output.value = result.message;
-          statusText.textContent = "Message extracted successfully!";
-        } else {
-          throw new Error(result.error || 'Unknown error');
+        if (!fileInput.files.length) {
+          statusText.textContent = 'Please upload an image first.';
+          return;
         }
-      } catch (err) {
-        console.error(err);
-        statusText.textContent = "Failed to extract message.";
-      }
+
+        const formData = new FormData();
+        formData.append('image', fileInput.files[0]);
+
+        try {
+          const res = await fetch('http://127.0.0.1:5000/decode', {
+            method: 'POST',
+            body: formData
+          });
+
+          console.log("Response status:", res.status);
+          console.log("Content-Type:", res.headers.get("content-type"));
+
+          if (!res.ok) {
+            const errorText = await res.text();
+            console.error("Server error:", errorText);
+            statusText.textContent = "Server error: " + errorText;
+            return;
+          }
+
+          const text = await res.text();
+          outputBox.value = text;
+          statusText.textContent = "Message decoded successfully!";
+          console.log("Decoded:", text);
+        } catch (err) {
+          console.error("JS Error:", err);
+          statusText.textContent = 'Unknown error. See console.';
+        }
+      });
     });
-  </script>
+  </script>  
 </body>
 </html>
