@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Send Message - Quantum Stego</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="send.html" class="text-teal-400 font-semibold">Send</a>
+        <a href="receive.html" class="text-gray-300 hover:text-white">Receive</a>
+        <a href="#" class="text-gray-300 hover:text-white">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="p-6 flex flex-col items-center justify-center text-center mt-10">
+
+    <h2 class="text-3xl font-semibold text-teal-300 mb-6">Send a Secret Message</h2>
+
+    <form id="sendForm" class="w-full max-w-lg space-y-6">
+      <!-- Image Upload -->
+      <div class="text-left">
+        <label class="block text-sm font-medium mb-2 text-gray-300">Select Cover Image</label>
+        <input type="file" accept="image/*" id="imageInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
+      </div>
+
+      <!-- Secret Message -->
+      <div class="text-left">
+        <label class="block text-sm font-medium mb-2 text-gray-300">Enter Secret Message</label>
+        <textarea id="secretMessage" rows="4" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" placeholder="Type your message here..."></textarea>
+      </div>
+
+      <!-- Encode Button -->
+      <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded">
+        Encode & Download Image
+      </button>
+    </form>
+
+    <!-- Placeholder message -->
+    <p id="statusMessage" class="mt-6 text-gray-400 text-sm italic"></p>
+
+  </main>
+
+</body>
+</html>
