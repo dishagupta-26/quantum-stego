@@ -26,77 +26,90 @@
 
     <h2 class="text-3xl font-semibold text-teal-300 mb-6">Send a Secret Message</h2>
 
-    <form id="sendForm" class="w-full max-w-lg space-y-6">
-      <!-- Image Upload -->
-      <div class="text-left">
-        <label class="block text-sm font-medium mb-2 text-gray-300">Select Cover Image</label>
-        <input type="file" accept="image/*" id="imageInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
-      </div>
+    <div id="sendForm" class="w-full max-w-lg space-y-6">
+    <!-- Image Upload -->
+    <div class="text-left">
+      <label class="block text-sm font-medium mb-2 text-gray-300">Select Cover Image</label>
+      <input type="file" accept="image/*" id="imageInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
+    </div>
 
-      <!-- Secret Message -->
-      <div class="text-left">
-        <label class="block text-sm font-medium mb-2 text-gray-300">Enter Secret Message</label>
-        <textarea id="secretMessage" rows="4" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" placeholder="Type your message here..."></textarea>
-      </div>
+    <!-- Secret Message -->
+    <div class="text-left">
+      <label class="block text-sm font-medium mb-2 text-gray-300">Enter Secret Message</label>
+      <textarea id="secretMessage" rows="4" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" placeholder="Type your message here..."></textarea>
+    </div>
 
-      <!-- Encode Button -->
-      <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded">
-        Encode & Download Image
-      </button>
-    </form>
+    <!-- Encode Button -->
+    <button type="button" id="encodeBtn" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded">
+      Encode & Download Image
+    </button>
+  </div>
 
     <!-- Placeholder message -->
     <p id="statusMessage" class="mt-6 text-gray-400 text-sm italic"></p>
 
   </main>
-    <script>
-    document.getElementById('sendForm').addEventListener('submit', async e => {
-      e.preventDefault();
+  <script>
+  console.log("💡 Send.js loaded");
 
-      const status = document.getElementById('statusMessage');
-      status.textContent = 'Encoding image… please wait';
+  const form = document.getElementById('sendForm');
+  const fileInput = document.getElementById('imageInput');
+  const msgInput = document.getElementById('secretMessage');
+  const status = document.getElementById('statusMessage');
 
-      const fileInput = document.getElementById('imageInput');
-      const msgInput  = document.getElementById('secretMessage');
+  document.getElementById('encodeBtn').addEventListener('click', async e => {
 
-      if (!fileInput.files.length || !msgInput.value.trim()) {
-        status.textContent = 'Please select an image and enter a message.';
+    status.textContent = 'Encoding image… please wait.';
+
+    if (!fileInput.files.length || !msgInput.value.trim()) {
+      status.textContent = 'Please select an image and enter a message.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('message', msgInput.value);
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/encode', {
+        method: 'POST',
+        body: formData
+      });
+
+      console.log("Status:", response.status);
+      const contentType = response.headers.get("content-type");
+      console.log("Content-Type:", contentType);
+
+      if (!response.ok) {
+        status.textContent = 'Server error. Could not encode.';
         return;
       }
 
-      // Build FormData
-      const formData = new FormData();
-      formData.append('image', fileInput.files[0]);
-      formData.append('message', msgInput.value);
-
-      try {
-        const response = await fetch('http://127.0.0.1:5000/encode', {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) throw new Error('Server error');
-
-        // Receive the encoded image as a Blob
-        const blob = await response.blob();
-        const url  = window.URL.createObjectURL(blob);
-
-        // Trigger download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'encoded_' + fileInput.files[0].name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-
-        status.textContent = 'Image encoded successfully! Download started.';
-      } catch (err) {
-        console.error(err);
-        status.textContent = 'Failed to encode image. See console for details.';
+      if (!contentType || !contentType.startsWith("image")) {
+        const text = await response.text();
+        status.textContent = 'Unexpected response (not an image).';
+        console.error("Response body:", text);
+        return;
       }
-    });
-  </script>
 
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      console.log("🔗 Download URL:", url);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'encoded_' + fileInput.files[0].name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      status.textContent = '✅ Image encoded and downloaded.';
+    } catch (err) {
+      console.error("❌ Error:", err);
+      status.textContent = 'Failed to encode image. See console.';
+    }
+  });
+</script>
 </body>
 </html>

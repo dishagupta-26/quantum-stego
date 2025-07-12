@@ -9,8 +9,11 @@ def encode_message(image_path, message, output_path='encoded.png'):
     for row in image:
         for pixel in row:
             if index < len(binary_msg):
-                pixel[0] = (pixel[0] & ~1) | int(binary_msg[index])
+                pixel[0] = (pixel[0] & 0b11111110) | int(binary_msg[index])
                 index += 1
+            else:
+                break
+
 
     cv2.imwrite(output_path, image)
     return output_path
