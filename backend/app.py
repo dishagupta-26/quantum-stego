@@ -68,7 +68,8 @@ def encode():
         # Return both file and key ID
         return jsonify({
             "image": output_filename,
-            "key_id": key_id
+            "key_id": key_id,
+            "quantum_key": qkd_key  # TEMP: for confirmation
 })
 
     except Exception as e:

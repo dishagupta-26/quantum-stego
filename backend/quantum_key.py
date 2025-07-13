@@ -11,4 +11,6 @@ def simulate_qkd_key(length=128):
 
     counts = result[0].data.meas.get_counts()
     key_str = list(counts.keys())[0]  # Like '100101...'
+
+    print(f"[QKD] Generated Quantum Key: {key_str[:64]}...")  # Print first 64 bits
     return key_str
