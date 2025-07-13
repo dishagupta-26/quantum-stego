@@ -3,39 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quantum Stego</title>
+  <title>Quantum Stego - Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-white min-h-screen">
+<body class="bg-gray-950 text-white min-h-screen flex flex-col">
 
   <!-- Header -->
   <header class="bg-gray-800 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
-    <nav class="space-x-4">
-      <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
-      <a href="send.html" class="text-gray-300 hover:text-white">Send</a>
-      <a href="receive.html" class="text-gray-300 hover:text-white">Receive</a>
-      <a href="about.html" class="text-gray-300 hover:text-white">About</a>
-    </nav>
-  </div>
-</header>
-
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="text-teal-400 font-semibold">Home</a>
+        <a href="send.html" class="text-gray-300 hover:text-white">Send</a>
+        <a href="receive.html" class="text-gray-300 hover:text-white">Receive</a>
+        <a href="about.html" class="text-gray-300 hover:text-white">About</a>
+      </nav>
+    </div>
+  </header>
 
   <!-- Main Content -->
-  <main class="p-6 flex flex-col items-center justify-center text-center">
-    <h2 class="text-3xl font-semibold mb-4 text-teal-300">Quantum Secure Communication via Steganography</h2>
-    <p class="text-gray-300 max-w-xl">
-      This project combines quantum key distribution (QKD) with steganography to enable a new kind of secure messaging.
-      Using quantum randomness to generate encryption keys and embedding messages within images, this system ensures
-      that both message content and its very presence remain hidden.
-    </p>
+  <main class="flex-grow flex items-center justify-center text-center px-6">
+    <div>
+      <h2 class="text-4xl font-bold text-teal-300 mb-4">Welcome to Quantum Stego</h2>
+      <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+        Secure your messages with quantum-powered encryption and steganography.
+        Seamlessly encode messages into images, and decode them whenever needed.
+      </p>
 
-    <!-- Placeholder Buttons for Future Steps -->
-    <div class="mt-8 flex gap-4 flex-wrap justify-center">
-      <button class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded">Send Message</button>
-      <button class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">Receive Message</button>
-      <button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Quantum Key Info</button>
+      <!-- Buttons -->
+      <div class="space-x-4">
+        <a href="send.html" class="bg-teal-500 hover:bg-teal-600 px-6 py-3 rounded text-white font-medium">Encode Message</a>
+        <a href="receive.html" class="bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded text-white font-medium">Decode Message</a>
+        <a href="about.html" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded text-white font-medium">Learn More</a>
+      </div>
     </div>
   </main>
 

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Quantum Stego</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">Quantum Stego</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="send.html" class="text-gray-300 hover:text-white">Send</a>
+        <a href="receive.html" class="text-gray-300 hover:text-white">Receive</a>
+        <a href="about.html" class="text-teal-400 font-semibold">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-8 mt-10 space-y-10">
+
+        <h2 class="text-3xl font-bold text-teal-300">About Quantum Stego</h2>
+
+        <section>
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">🤖 What is Quantum Stego?</h3>
+            <p class="text-gray-300 leading-relaxed">
+            Quantum Stego is a secure steganography platform that allows users to hide secret messages inside images,
+            secured using simulated Quantum Key Distribution. The encryption ensures that even if the stego image is intercepted,
+            the hidden message remains safe without the correct quantum-generated key.
+            </p>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">✨ Core Features</h3>
+            <ul class="list-disc pl-6 text-gray-300 space-y-1">
+            <li>Hide messages inside images using LSB steganography</li>
+            <li>Encrypt messages using XOR with a quantum-simulated key</li>
+            <li>Simulate QKD using Qiskit (SamplerV2)</li>
+            <li>Clean, dark-themed frontend using Tailwind CSS</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">🛠️ Technology Stack</h3>
+            <ul class="list-disc pl-6 text-gray-300 space-y-1">
+            <li>Frontend: HTML, Tailwind CSS, JavaScript</li>
+            <li>Backend: Flask (Python)</li>
+            <li>Quantum Simulation: Qiskit (Aer SamplerV2)</li>
+            <li>Image Processing: OpenCV</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">⚙️ How It Works</h3>
+            <ol class="list-decimal pl-6 text-gray-300 space-y-1">
+            <li>User uploads an image and enters a secret message.</li>
+            <li>A quantum key is generated via simulation.</li>
+            <li>The message is XOR-encrypted with the quantum key.</li>
+            <li>The encrypted bits are embedded into the image (LSB).</li>
+            <li>To extract, the image is uploaded along with the key ID.</li>
+            <li>The system retrieves the key, decodes bits, and decrypts the message.</li>
+            </ol>
+        </section>
+
+        <section class="text-left text-gray-300">
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">🔐 What If Someone Gets the Image or the Key?</h3>
+            <p class="mb-4">
+            In our system, messages are hidden inside images using steganography and also encrypted using a quantum-generated key.
+            So, what happens if someone intercepts these?
+            </p>
+
+            <ul class="list-disc list-inside space-y-2">
+            <li>
+                <strong>If Eve gets the image:</strong> It just looks like a regular image. There's no way to tell that it contains a secret message,
+                and without the key, she can't decrypt anything meaningful.
+            </li>
+            <li>
+                <strong>If Eve gets the key:</strong> That's more serious. If she also has the image, she could extract and decrypt the message.
+                That's why it's important to share the key securely — either through an encrypted channel or offline.
+            </li>
+            </ul>
+
+            <p class="mt-4">
+            In future versions, we can integrate public-key cryptography or even real QKD (Quantum Key Distribution) for sharing keys more securely.
+            But for now, always treat the quantum key like a real password — never share it over insecure channels.
+            </p>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">🚀 Get Started</h3>
+            <p class="text-gray-300 leading-relaxed">
+            To start using Quantum Stego, navigate to the
+            <a href="send.html" class="text-teal-400 hover:underline">Send</a> page to encode a message,
+            or go to the <a href="receive.html" class="text-teal-400 hover:underline">Receive</a> page to decode a hidden message.
+            </p>
+        </section>
+
+        </main>
+
+
+</body>
+</html>
