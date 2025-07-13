@@ -16,7 +16,7 @@ document.getElementById('receiveForm').addEventListener('submit', async (e) => {
     formData.append('key_id', keyIdInput.value.trim());
 
     try {
-      const res = await fetch('https://quantum-stego.onrender.com/', {
+      const res = await fetch('https://quantum-stego.onrender.com/decode', {
         method: 'POST',
         body: formData
       });

@@ -19,7 +19,7 @@ console.log("💡 Send.js loaded");
     formData.append('message', msgInput.value);
 
 try {
-  const response = await fetch('https://quantum-stego.onrender.com/', {
+  const response = await fetch('https://quantum-stego.onrender.com/encode', {
     method: 'POST',
     body: formData
   });
@@ -31,7 +31,7 @@ try {
   if (!response.ok) throw new Error('Server error');
 
   const data = await response.json();
-  const imageResponse = await fetch(`http://127.0.0.1:5000/encoded/${data.image}`);
+  const imageResponse = await fetch(`https://quantum-stego.onrender.com/encoded/${data.image}`);
   const blob = await imageResponse.blob();
   const url = window.URL.createObjectURL(blob);
 
