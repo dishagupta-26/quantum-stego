@@ -1,12 +1,14 @@
-# quantum_key.py
-
 from qiskit import QuantumCircuit
-import random
+from qiskit_aer.primitives import SamplerV2
 
 def simulate_qkd_key(length=128):
-    # Simulate QKD-style binary key using randomness
-    key = ''
-    for _ in range(length):
-        bit = random.choice(['0', '1'])
-        key += bit
-    return key
+    qc = QuantumCircuit(length)
+    qc.h(range(length))
+    qc.measure_all()
+
+    sampler = SamplerV2()
+    result = sampler.run([qc], shots=1).result()
+
+    counts = result[0].data.meas.get_counts()
+    key_str = list(counts.keys())[0]  # Like '100101...'
+    return key_str
