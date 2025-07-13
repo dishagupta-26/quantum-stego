@@ -2,6 +2,7 @@ import cv2
 
 def decode_message(image_path):
     image = cv2.imread(image_path)
+    print(f"[DEBUG] Image loaded? {'Yes' if image is not None else 'No'}")
 
     if image is None:
         raise ValueError("Image not found or invalid format.")

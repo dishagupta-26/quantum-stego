@@ -33,6 +33,12 @@
         <input type="file" accept="image/*" id="stegoImageInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
       </div>
 
+      <!-- Key ID input -->
+      <div class="text-left">
+        <label class="block text-sm font-medium mb-2 text-gray-300">Enter Key ID</label>
+        <input type="text" id="keyIdInput" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" placeholder="e.g., 8adc947" />
+      </div>
+
       <!-- Extract Button -->
       <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded">
         Extract Message
@@ -49,51 +55,44 @@
 
   </main>
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('receiveForm');
-      const fileInput = document.getElementById('stegoImageInput');
-      const outputBox = document.getElementById('outputMessage');
-      const statusText = document.getElementById('statusText');
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // prevent page from refreshing
+  document.getElementById('receiveForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        statusText.textContent = 'Decoding... please wait';
+    const imageInput = document.getElementById('stegoImageInput');
+    const keyIdInput = document.getElementById('keyIdInput');
+    const output = document.getElementById('outputMessage');
+    const status = document.getElementById('statusText');
 
-        if (!fileInput.files.length) {
-          statusText.textContent = 'Please upload an image first.';
-          return;
-        }
+    if (!imageInput.files.length || !keyIdInput.value.trim()) {
+      status.textContent = 'Please upload an image and enter the key ID.';
+      return;
+    }
 
-        const formData = new FormData();
-        formData.append('image', fileInput.files[0]);
+    const formData = new FormData();
+    formData.append('image', imageInput.files[0]);
+    formData.append('key_id', keyIdInput.value.trim());
 
-        try {
-          const res = await fetch('http://127.0.0.1:5000/decode', {
-            method: 'POST',
-            body: formData
-          });
-
-          console.log("Response status:", res.status);
-          console.log("Content-Type:", res.headers.get("content-type"));
-
-          if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Server error:", errorText);
-            statusText.textContent = "Server error: " + errorText;
-            return;
-          }
-
-          const text = await res.text();
-          outputBox.value = text;
-          statusText.textContent = "Message decoded successfully!";
-          console.log("Decoded:", text);
-        } catch (err) {
-          console.error("JS Error:", err);
-          statusText.textContent = 'Unknown error. See console.';
-        }
+    try {
+      const res = await fetch('http://127.0.0.1:5000/decode', {
+        method: 'POST',
+        body: formData
       });
-    });
-  </script>  
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(`Server error: ${err}`);
+      }
+
+      const text = await res.text();
+      output.value = text;
+      status.textContent = 'Message decoded successfully!';
+    } catch (err) {
+      console.error(err);
+      output.value = '';
+      status.textContent = 'Failed to decode. See console.';
+    }
+  });
+</script> 
 </body>
 </html>
