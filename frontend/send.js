@@ -19,7 +19,7 @@ console.log("💡 Send.js loaded");
     formData.append('message', msgInput.value);
 
 try {
-  const response = await fetch('http://127.0.0.1:5000/encode', {
+  const response = await fetch('https://quantum-stego.onrender.com/', {
     method: 'POST',
     body: formData
   });
